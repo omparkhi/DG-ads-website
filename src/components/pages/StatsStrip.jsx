@@ -1,0 +1,273 @@
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const ease = [0.16, 1, 0.3, 1];
+
+const stats = [
+  {
+    number: 50,
+    suffix: "+",
+    label: "Brands Built",
+    caseStudy:
+      "From local startups to D2C brands — we've built 50+ brand identities that actually convert.",
+  },
+  {
+    number: 3.2,
+    suffix: "×",
+    decimals: 1,
+    label: "Avg. ROI Boost",
+    caseStudy:
+      "Our performance ad campaigns average 3.2× return — tracked, optimised, and reported monthly.",
+  },
+  {
+    number: 4,
+    suffix: " yrs",
+    label: "Years Active",
+    caseStudy:
+      "Since 2021, DGads has grown from a 2-person team to a full-stack digital powerhouse.",
+  },
+];
+
+function useCountUp(target, decimals = 0, active = false, duration = 1800) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!active) return;
+    let start = null;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(parseFloat((eased * target).toFixed(decimals)));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [active, target, decimals, duration]);
+
+  return value;
+}
+
+function StatCard({ stat, index, active, delay }) {
+  const count = useCountUp(stat.number, stat.decimals || 0, active, 1600);
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease, delay: delay }}
+      onClick={() => setExpanded((p) => !p)}
+      style={{
+        flex: 1,
+        minWidth: 0,
+        background: "rgba(255,255,255,0.03)",
+        border: `1px solid ${expanded ? "rgba(127,119,221,0.6)" : "rgba(127,119,221,0.18)"}`,
+        borderRadius: 20,
+        padding: "32px 28px",
+        cursor: "pointer",
+        position: "relative",
+        overflow: "hidden",
+        transition: "border-color 0.3s ease",
+      }}
+    >
+      {/* purple glow on hover */}
+      <div
+        style={{
+          position: "absolute",
+          top: -40,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 160,
+          height: 160,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(127,119,221,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* top label */}
+      <div
+        style={{
+          fontSize: 11,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.35)",
+          marginBottom: 12,
+          fontWeight: 500,
+        }}
+      >
+        {stat.label}
+      </div>
+
+      {/* number */}
+      <div
+        style={{
+          fontSize: 56,
+          fontWeight: 700,
+          color: "#ffffff",
+          lineHeight: 1,
+          letterSpacing: "-0.02em",
+        }}
+      >
+        <span style={{ color: "#3b82f6" }}>
+          {active
+            ? stat.decimals
+              ? count.toFixed(stat.decimals)
+              : Math.round(count)
+            : 0}
+        </span>
+        <span
+          style={{
+            fontSize: 32,
+            color: "rgba(255,255,255,0.5)",
+            marginLeft: 2,
+          }}
+        >
+          {stat.suffix}
+        </span>
+      </div>
+
+      {/* tap hint */}
+      <div
+        style={{
+          marginTop: 16,
+          fontSize: 12,
+          color: expanded ? "#2563eb" : "rgba(255,255,255,0.2)",
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          transition: "color 0.3s",
+        }}
+      >
+        <span
+          style={{
+            display: "inline-block",
+            width: 14,
+            height: 14,
+            border: "1px solid currentColor",
+            borderRadius: "50%",
+            lineHeight: "13px",
+            textAlign: "center",
+            fontSize: 9,
+          }}
+        >
+          {expanded ? "−" : "+"}
+        </span>
+        {expanded ? "Hide detail" : "View case study"}
+      </div>
+
+      {/* expandable case study */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+            transition={{ duration: 0.4, ease }}
+            style={{ overflow: "hidden" }}
+          >
+            <div
+              style={{
+                borderTop: "1px solid rgba(127,119,221,0.2)",
+                paddingTop: 14,
+                fontSize: 13,
+                lineHeight: 1.65,
+                color: "rgba(255,255,255,0.55)",
+              }}
+            >
+              {stat.caseStudy}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+export default function StatsStrip() {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.3 },
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      style={{
+        marginTop: "30px",
+        position: "relative",
+      }}
+    >
+      {/* subtle bg glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 600,
+          height: 300,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(ellipse, rgba(83,74,183,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ display: "flex", gap: 16, position: "relative" }}>
+        {stats.map((stat, i) => (
+          <StatCard
+            key={stat.label}
+            stat={stat}
+            index={i}
+            active={visible}
+            delay={i * 0.12}
+          />
+        ))}
+      </div>
+
+      {/* replay button */}
+      {/* <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: visible ? 1 : 0 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+        onClick={() => {
+          setVisible(false);
+          setTimeout(() => setVisible(true), 50);
+        }}
+        style={{
+          marginTop: 28,
+          background: "transparent",
+          border: "1px solid rgba(127,119,221,0.3)",
+          borderRadius: 10,
+          color: "rgba(255,255,255,0.4)",
+          fontSize: 12,
+          padding: "8px 18px",
+          cursor: "pointer",
+          letterSpacing: "0.04em",
+          transition: "all 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.borderColor = "rgba(127,119,221,0.7)";
+          e.target.style.color = "rgba(255,255,255,0.8)";
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.borderColor = "rgba(127,119,221,0.3)";
+          e.target.style.color = "rgba(255,255,255,0.4)";
+        }}
+      >
+        Replay animation ↗
+      </motion.button> */}
+    </section>
+  );
+}

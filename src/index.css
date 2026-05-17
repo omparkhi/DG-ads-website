@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+
+@import "tailwindcss";
+
+:root {
+  --color-bg: #efeeee;
+  --color-surface: #ffffff;
+  --color-soft: #eef2ff;
+
+  --color-dark: #0f172a;
+  --color-dark-soft: #111827;
+
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-gold: #f59e0b;
+
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --color-border: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+.container-main {
+  width: min(1180px, 92%);
+  margin-inline: auto;
+}
+
+.section-padding {
+  padding: 96px 0;
+}
+
+.glass-card {
+  background: #ffffff99;
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+}
+
+.dark-section {
+  background: linear-gradient(135deg, #0f172a, #111827);
+  color: white;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

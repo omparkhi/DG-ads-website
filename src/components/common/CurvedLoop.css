@@ -1,0 +1,29 @@
+.curved-loop-jacket {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.curved-loop-svg {
+  user-select: none;
+  width: 100%;
+  aspect-ratio: 100 / 12;
+  overflow: visible;
+  display: block;
+  font-size: 1.5rem;
+  fill: #fff;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.curved-loop-bg {
+  filter: drop-shadow(0 18px 40px rgba(37, 99, 235, 0.25));
+}
+
+.curved-loop-svg text {
+  dominant-baseline: middle;
+}
