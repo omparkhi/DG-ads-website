@@ -14,14 +14,19 @@ const mobileVideo =
 export default function About() {
   return (
     <section className="bg-[#000] min-h-screen w-full px-20 pt-5">
-      <TrueFocus
+      {/* <TrueFocus
         sentence="Building Brands For Digital-Era"
         manualMode={false}
         blurAmount={5}
         borderColor="#5227FF"
         animationDuration={0.5}
         pauseBetweenAnimations={1}
-      />
+      /> */}
+      <div className="flex w-full items-center justify-center">
+        <h1 className="text-5xl font-bold text-white">
+          Building Brands For Digital-Era
+        </h1>
+      </div>
 
       {/* ✅ Two column row — text left, split reveal right */}
       <div className="w-full max-w-6xl mx-auto flex items-center mt-10">

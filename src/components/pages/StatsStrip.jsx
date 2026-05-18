@@ -5,11 +5,16 @@ const ease = [0.16, 1, 0.3, 1];
 
 const stats = [
   {
-    number: 50,
+    number: 15,
     suffix: "+",
     label: "Brands Built",
     caseStudy:
       "From local startups to D2C brands — we've built 50+ brand identities that actually convert.",
+  },
+  {
+    number: 98,
+    suffix: "%",
+    label: "Client Satisfaction",
   },
   {
     number: 3.2,

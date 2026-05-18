@@ -2,6 +2,7 @@ import Navbar from "./components/layout/Navbar";
 import About from "./components/pages/About";
 import AgencyIntro from "./components/pages/AgencyIntro";
 import Hero from "./components/pages/Hero";
+import Services from "./components/pages/Services";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Hero />
         <AgencyIntro />
         <About />
+        <Services />
       </main>
     </>
   );
