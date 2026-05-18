@@ -25,6 +25,14 @@
   }
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -117,7 +125,6 @@ body {
 
   .services-card-content {
     padding: 28px 22px 24px 26px;
-    gap: 14px;
   }
 
   .services-title {

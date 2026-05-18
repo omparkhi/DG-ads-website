@@ -327,15 +327,7 @@ export default function Services() {
             {services.map((service, i) => (
               <ScrollStackItem key={service.number}>
                 {/* card inner: left content | right preview */}
-                <div
-                  className="services-card-inner"
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 38%",
-                    minHeight: "23rem",
-                    position: "relative",
-                  }}
-                >
+                <div className="services-card-inner">
                   {/* ── LEFT — ServiceRow style ── */}
                   <div
                     style={{
@@ -369,18 +361,7 @@ export default function Services() {
                     />
 
                     {/* content */}
-                    <div
-                      className="services-card-content"
-                      style={{
-                        padding: "40px 40px 40px 44px",
-                        position: "relative",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        gap: 18,
-                      }}
-                    >
+                    <div className="services-card-content">
                       {/* number */}
                       <div
                         style={{
