@@ -19,6 +19,12 @@
   --color-border: #e2e8f0;
 }
 
+@layer utilities {
+  .padding {
+    @apply px-3 py-4 sm:px-6 md:px-10 lg:px-20;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -65,4 +71,80 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.services-section {
+  background: #000;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.services-card-inner {
+  display: grid;
+  grid-template-columns: 1fr 38%;
+  min-height: 23rem;
+  position: relative;
+}
+
+.services-card-content {
+  padding: 40px 40px 40px 44px;
+}
+
+.services-title {
+  font-size: 30px;
+}
+
+.services-desc {
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .services-section {
+    height: auto !important;
+    min-height: auto;
+    overflow: visible !important;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .services-card-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .services-card-content {
+    padding: 28px 22px 24px 26px;
+    gap: 14px;
+  }
+
+  .services-title {
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .services-desc {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .services-preview {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-card-content {
+    padding: 24px 18px 22px 22px;
+  }
+
+  .services-title {
+    font-size: 21px;
+  }
+
+  .services-desc {
+    font-size: 13px;
+  }
 }

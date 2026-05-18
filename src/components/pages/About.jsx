@@ -13,7 +13,7 @@ const mobileVideo =
 
 export default function About() {
   return (
-    <section className="bg-[#000] min-h-screen w-full px-20 pt-5">
+    <section className="bg-[#000] min-h-fit w-full padding pt-8">
       {/* <TrueFocus
         sentence="Building Brands For Digital-Era"
         manualMode={false}
@@ -23,13 +23,13 @@ export default function About() {
         pauseBetweenAnimations={1}
       /> */}
       <div className="flex w-full items-center justify-center">
-        <h1 className="text-5xl font-bold text-white">
+        <h1 className="text-3xl md:text-5xl font-bold text-white">
           Building Brands For Digital-Era
         </h1>
       </div>
 
       {/* ✅ Two column row — text left, split reveal right */}
-      <div className="w-full max-w-6xl mx-auto flex items-center mt-10">
+      <div className="w-full max-w-6xl mx-auto sm:flex items-center mt-6">
         {/* Left — text content */}
         <div className="flex-1 min-w-0">
           <BlurText
@@ -37,12 +37,12 @@ export default function About() {
             delay={50}
             animateBy="words"
             direction="top"
-            className="text-[17px] text-slate-300 leading-relaxed"
+            className="text-[16px] sm:text-[17px] text-slate-300 leading-relaxed"
           />
         </div>
 
         {/* Right — split reveal, takes more space */}
-        <div className="w-[55%] flex-shrink-0">
+        <div className="sm:w-[55%] flex-shrink-0">
           <SplitReveal />
         </div>
       </div>

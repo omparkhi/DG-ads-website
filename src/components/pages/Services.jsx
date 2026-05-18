@@ -224,7 +224,7 @@ export default function Services() {
     <>
       <section
         ref={sectionRef}
-        className="px-30 pt-10"
+        className="padding services-section"
         style={{
           background: "#000000",
           height: "100vh" /* ✅ full viewport height only */,
@@ -261,7 +261,7 @@ export default function Services() {
               fontSize: 11,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
-              color: "#7F77DD",
+              color: "#5227FF",
               fontWeight: 500,
               marginBottom: 14,
             }}
@@ -277,28 +277,30 @@ export default function Services() {
               gap: 16,
             }}
           >
-            <div className="flex items-center gap-6">
+            <div className="sm:flex items-center sm:gap-6">
               <TrueFocus
                 sentence="Services That Scale"
                 manualMode={false}
-                blurAmount={3}
+                blurAmount={2}
                 borderColor="#5227FF"
                 animationDuration={0.5}
                 pauseBetweenAnimations={1}
               />
-              <TrueFocus
-                sentence="Your Brand"
-                manualMode={false}
-                blurAmount={3}
-                borderColor="#5227FF"
-                animationDuration={0.5}
-                pauseBetweenAnimations={1}
-              />
+              <div className="mt-6 sm:mt-0 flex items-center align-start">
+                <TrueFocus
+                  sentence="Your Brand"
+                  manualMode={false}
+                  blurAmount={2}
+                  borderColor="#5227FF"
+                  animationDuration={0.5}
+                  pauseBetweenAnimations={1}
+                />
+              </div>
             </div>
             <p
+              className="text-slate-200"
               style={{
                 fontSize: 15,
-                color: "rgba(255,255,255,0.35)",
                 maxWidth: 300,
                 lineHeight: 1.7,
                 margin: 0,
@@ -326,6 +328,7 @@ export default function Services() {
               <ScrollStackItem key={service.number}>
                 {/* card inner: left content | right preview */}
                 <div
+                  className="services-card-inner"
                   style={{
                     display: "grid",
                     gridTemplateColumns: "1fr 38%",
@@ -367,6 +370,7 @@ export default function Services() {
 
                     {/* content */}
                     <div
+                      className="services-card-content"
                       style={{
                         padding: "40px 40px 40px 44px",
                         position: "relative",
@@ -391,12 +395,11 @@ export default function Services() {
 
                       {/* title */}
                       <div
+                        className="services-title"
                         style={{
-                          fontSize: 30,
                           fontWeight: 700,
-                          color: "#ffffff",
+                          color: "#fff",
                           letterSpacing: "-0.02em",
-                          lineHeight: 1.1,
                         }}
                       >
                         {service.title}
@@ -404,9 +407,8 @@ export default function Services() {
 
                       {/* desc */}
                       <p
+                        className="services-desc"
                         style={{
-                          fontSize: 15,
-                          lineHeight: 1.75,
                           color: "rgba(255,255,255,0.45)",
                           maxWidth: 440,
                           margin: 0,
@@ -481,7 +483,7 @@ export default function Services() {
                   </div>
 
                   {/* ── RIGHT — PreviewCard ── */}
-                  <div style={{ padding: 20 }}>
+                  <div className="services-preview" style={{ padding: 20 }}>
                     <PreviewCard service={service} />
                   </div>
                 </div>

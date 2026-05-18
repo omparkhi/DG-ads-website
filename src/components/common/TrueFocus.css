@@ -22,6 +22,36 @@
   user-select: none;
 }
 
+@media (max-width: 850px) {
+  .focus-word {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .focus-word {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .focus-word {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 440px) {
+  .focus-word {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .focus-word {
+    font-size: 1.5rem;
+  }
+}
+
 .focus-word.active {
   filter: blur(0);
 }

@@ -6,9 +6,9 @@ import DarkVeil from "../common/DarkVeil";
 
 export default function AgencyIntro() {
   return (
-    <section className="relative overflow-hidden px-20 py-24">
+    <section className="relative overflow-hidden padding bg-black">
       {/* Background effect */}
-      <div className="pointer-events-none absolute inset-0 z-0 mt-4">
+      <div className="h-60 sm:h-auto pointer-events-none absolute inset-0 z-0">
         <DarkVeil
           hueShift={0}
           noiseIntensity={0}
@@ -21,18 +21,22 @@ export default function AgencyIntro() {
 
       {/* Content */}
       <div className="relative z-10">
-        <div className="w-full flex justify-between mt-4">
-          <TextType
-            text={["We Build Brands That Dominate Digitally"]}
-            typingSpeed={75}
-            pauseDuration={1500}
-            showCursor
-            cursorCharacter="|"
-            deletingSpeed={50}
-            className="text-4xl md:text-5xl font-bold tracking-[-0.04em] text-white"
-          />
+        <div className="w-full flex flex-col md:flex-row md:items-start md:justify-between gap-6 mt-7">
+          <div className="w-full md:max-w-[720px] md:min-h-[120px]">
+            <TextType
+              text={["We Build Brands That Dominate Digitally"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              showCursor
+              cursorCharacter="|"
+              deletingSpeed={50}
+              className="block text-3xl sm:text-3xl md:text-5xl font-bold tracking-[-0.04em] text-white leading-tight"
+            />
+          </div>
 
-          <BookCallButton />
+          <div className="shrink-0 md:pt-2">
+            <BookCallButton />
+          </div>
         </div>
 
         <BlurText
@@ -40,15 +44,15 @@ export default function AgencyIntro() {
           delay={50}
           animateBy="words"
           direction="top"
-          className="text-xl mt-3 max-w-2xl text-slate-300"
+          className="text-[16px] sm:text-xl mt-3 max-w-2xl text-slate-300"
         />
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <button className="rounded-full bg-[var(--color-primary)] px-8 py-4 font-semibold text-white shadow-lg shadow-blue-600/25">
+          <button className="h-12 rounded-full bg-[var(--color-primary)] px-5 font-semibold text-white shadow-lg shadow-blue-600/25">
             Start Project
           </button>
 
-          <button className="rounded-full border border-slate-300 bg-white px-8 py-4 font-semibold text-slate-900 backdrop-blur-xl">
+          <button className="h-12 rounded-full border border-slate-300 bg-white px-5 font-semibold text-slate-900 backdrop-blur-xl">
             View Work
           </button>
         </div>

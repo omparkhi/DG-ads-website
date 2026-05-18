@@ -68,7 +68,7 @@ function StatCard({ stat, index, active, delay }) {
         background: "rgba(255,255,255,0.03)",
         border: `1px solid ${expanded ? "rgba(127,119,221,0.6)" : "rgba(127,119,221,0.18)"}`,
         borderRadius: 20,
-        padding: "32px 28px",
+        padding: "clamp(18px, 3vw, 32px)",
         cursor: "pointer",
         position: "relative",
         overflow: "hidden",
@@ -229,7 +229,15 @@ export default function StatsStrip() {
         }}
       />
 
-      <div style={{ display: "flex", gap: 16, position: "relative" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 16,
+          position: "relative",
+        }}
+      >
+        {" "}
         {stats.map((stat, i) => (
           <StatCard
             key={stat.label}

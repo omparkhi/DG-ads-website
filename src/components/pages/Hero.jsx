@@ -9,7 +9,10 @@ const mobileVideo =
 export default function Hero() {
   return (
     <>
-      <section id="home" className="relative h-screen w-screen overflow-hidden">
+      <section
+        id="home"
+        className="relative w-full overflow-hidden h-[43vh] sm:h-[50vh] md:h-screen"
+      >
         <video
           autoPlay
           muted
@@ -27,7 +30,7 @@ export default function Hero() {
 
         {/* Content */}
       </section>
-      <div className="-mt-50 relative z-20">
+      <div className=" -mt-50 relative z-20">
         <CurvedLoop
           marqueeText="Digital Marketing  ✦  Social Media  ✦  Branding  ✦  Performance Ads  ✦  Content Creation  ✦  Growth Strategy  ✦ Web Services  ✦ "
           speed={2}

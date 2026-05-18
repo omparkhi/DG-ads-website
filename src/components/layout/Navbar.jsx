@@ -16,9 +16,9 @@ export default function Navbar() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  // px-2 sm:px-10 md:px-15 md:py-4
   return (
-    <header className="fixed left-0 top-0 z-50 w-full px-20 py-4">
+    <header className="fixed left-0 top-0 z-50 w-full padding">
       <motion.nav
         animate={
           scrolled
@@ -53,7 +53,7 @@ export default function Navbar() {
         className="mx-auto flex items-center justify-between"
       >
         {/* Logo + Brand */}
-        <div className="flex items-center">
+        <div className="flex items-center -ml-3">
           <motion.img
             src={Logo}
             alt="logo"
@@ -71,7 +71,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, maxWidth: 120, x: 0 }}
                 exit={{ opacity: 0, maxWidth: 0, x: -10 }}
                 transition={{ duration: 0.6, ease }}
-                className="overflow-hidden whitespace-nowrap text-[22px] font-bold text-white"
+                className="overflow-hidden whitespace-nowrap text-[16px] sm:text-[22px] font-bold text-white"
               >
                 DGads
               </motion.div>
@@ -93,7 +93,7 @@ export default function Navbar() {
                   paddingBottom: "0px",
                 }
               : {
-                  gap: "32px",
+                  gap: "10px",
                   background: "rgba(255,255,255,0.7)",
                   boxShadow: "0 20px 80px rgba(15,23,42,0.07)",
                   paddingLeft: "4px",
