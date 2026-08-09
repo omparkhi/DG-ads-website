@@ -25,11 +25,11 @@ export default function LetsWorkTogether() {
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
               />
               {/* Fixed Center Logo with background */}
-              <div className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 md:w-20 md:h-20 lg:w-28 lg:h-28 bg-white rounded-full flex items-center justify-center shadow-sm">
+              <div className="relative z-10 w-18 h-18 sm:w-22 sm:h-22 md:w-24 md:h-24 lg:w-28 lg:h-28 bg-white rounded-full flex items-center justify-center shadow-sm">
                 <img
                   src={MainLogo}
                   alt="DG Ads Logo"
-                  className="w-10 sm:w-14 md:w-12 lg:w-16 object-contain"
+                  className="w-12 sm:w-14 md:w-16 lg:w-20 object-contain"
                 />
               </div>
             </div>

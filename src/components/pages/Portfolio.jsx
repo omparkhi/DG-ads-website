@@ -12,28 +12,12 @@ export default function Portfolio() {
   const caseStudies = [
     {
       id: "1",
-      title: "Driving 300% Organic Traffic Growth for an E-Commerce Giant",
-      category: "SEO Optimization",
-      metric: "+300% Traffic",
-      image: "https://framerusercontent.com/images/CZsPHjlGSsOXek9qQ6kO2F74.png",
-      link: "/portfolio/1",
-    },
-    {
-      id: "2",
-      title: "How Targeted PPC Ads Boosted a Startup's Revenue by 150%",
-      category: "Paid Acquisition",
-      metric: "+150% Revenue",
+      title: "Digital Growth for a Nagpur-Based Business",
+      category: "Digital Marketing",
+      metric: "3X Leads",
       image: "https://framerusercontent.com/images/kza2HfI8ZzmM1rCS88ItPqNbf0k.png",
-      link: "/portfolio/2",
-    },
-    {
-      id: "3",
-      title: "Achieving a 5X ROI with PPC for a SaaS Company",
-      category: "Performance Ads",
-      metric: "5.2× ROI Boost",
-      image: "https://framerusercontent.com/images/ysolbP7YxPZVjCE241Isof6j78.png",
-      link: "/portfolio/3",
-    },
+      link: "/portfolio/1",
+    }
   ];
 
   return (

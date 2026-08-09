@@ -13,22 +13,34 @@ export default function PortfolioDetails() {
 
   // Mock Data for the case study
   const study = {
-    title: "Enhancing Local Visibility for a Healthcare Provider",
-    client: "Luna Tech",
-    role: "SEO Optimization",
-    duration: "2 Months",
-    budget: "$200,000",
+    title: "Digital Growth for a Nagpur-Based Business",
+    client: "Confidential (Nagpur)",
+    role: "Full-Stack Digital Marketing",
+    duration: "3 Months",
+    budget: "Confidential",
     heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80",
     contentImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-    overview: "In an increasingly competitive landscape, our client faced challenges with organic traffic stagnation. Despite offering a vast range of services, their website struggled to rank for competitive keywords, resulting in reduced visibility and sales. We stepped in with a tailored SEO strategy that delivered remarkable results—a 300% increase in organic traffic within 12 months.",
+    overview: "A Nagpur-based business was facing low online visibility, limited customer engagement, and inconsistent lead generation. They needed a holistic digital transformation to drive actual revenue and brand awareness.",
     challenges: [
-      { title: "Low Keyword Rankings", desc: "The website ranked poorly for high-value industry keywords, limiting visibility." },
-      { title: "Technical SEO Issues", desc: "Slow page loading speed, broken links, and crawl errors hindered search engine indexing." },
-      { title: "Content Gaps", desc: "Lack of optimized content for targeted product categories and long-tail keywords." },
-      { title: "Fierce Competition", desc: "The space was dominated by established players with robust SEO strategies." }
+      { title: "Low Visibility", desc: "The business struggled to get noticed in a crowded online market." },
+      { title: "Limited Engagement", desc: "Customer interaction across social channels was minimal." },
+      { title: "Inconsistent Leads", desc: "Lead generation was unpredictable, making growth difficult to forecast." }
     ],
-    strategy: "Keywords are the bridge between your content and your audience. Effective keyword research identifies the terms and phrases your potential customers are searching for. This involves analyzing search volume, competition, and relevance. By targeting the right keywords, businesses can attract the right audience and improve conversion rates.",
-    results: "Through our comprehensive SEO overhaul, the client experienced a massive surge in organic visibility. Traffic grew by 300%, leading to a proportional increase in qualified leads and a significant boost in overall ROI. The improved technical health of the site also reduced bounce rates by 45%."
+    strategy: "Mainframe Solution implemented a complete digital marketing strategy including: Social Media Management, Web Development, Performance Marketing, Meta Ads (Instagram, Whatsapp & Facebook), Local SEO Optimization, and Creative Content & Reels.",
+    results: (
+      <div className="flex flex-col gap-3">
+        <span className="block">✔️ 250% increase in social media reach</span>
+        <span className="block">✔️ 3X growth in qualified leads</span>
+        <span className="block">✔️ 70% increase in website traffic</span>
+        <span className="block">✔️ Improved local brand awareness and customer engagement</span>
+        <p className="mt-4">
+          Through a data-driven marketing approach, Mainframe Solution helped the business strengthen its online presence, attract more customers, and achieve measurable growth.
+        </p>
+        <p className="mt-2 font-bold text-slate-900">
+          Mainframe Solution – Your Partner for Digital Growth in Nagpur.
+        </p>
+      </div>
+    )
   };
 
   const fadeUp = {
