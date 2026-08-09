@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 
 @import "tailwindcss";
 
@@ -10,8 +10,8 @@
   --color-dark: #0f172a;
   --color-dark-soft: #111827;
 
-  --color-primary: #2563eb;
-  --color-primary-light: #3b82f6;
+  --color-primary: #ea580c;
+  --color-primary-light: #f97316;
   --color-gold: #f59e0b;
 
   --color-text: #0f172a;
@@ -30,7 +30,7 @@ body,
 #root {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 * {
@@ -75,14 +75,14 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #2563eb, #3b82f6, #f59e0b);
+  background: linear-gradient(90deg, #ea580c, #f97316, #f59e0b);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .services-section {
-  background: #000;
+  background: #fff;
   min-height: 100vh;
   overflow: hidden;
   position: relative;
@@ -153,5 +153,135 @@ body {
 
   .services-desc {
     font-size: 13px;
+  }
+}
+
+/* Ribbon Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  gap: 60px;
+  will-change: transform;
+  animation: marquee 20s linear infinite;
+  width: max-content;
+}
+
+.marquee-track-reverse {
+  display: flex;
+  gap: 60px;
+  will-change: transform;
+  animation: marquee-reverse 20s linear infinite;
+  width: max-content;
+}
+
+.marquee-track:hover,
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+.ribbon {
+  background: #FF6B00;
+  padding: 18px 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  flex-shrink: 0;
+}
+
+.marquee-text {
+  font-family: 'Mona Sans', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  color: #000;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.marquee-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #000;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+
+/* Ribbon Marquee responsive styles */
+@media (max-width: 1024px) {
+  .ribbon {
+    padding: 14px 0;
+  }
+  .marquee-track,
+  .marquee-track-reverse,
+  .marquee-item {
+    gap: 48px;
+  }
+  .marquee-text {
+    font-size: 22px;
+  }
+  .marquee-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ribbon {
+    padding: 10px 0;
+  }
+  .marquee-track,
+  .marquee-track-reverse,
+  .marquee-item {
+    gap: 36px;
+  }
+  .marquee-text {
+    font-size: 16px;
+  }
+  .marquee-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ribbon {
+    padding: 8px 0;
+  }
+  .marquee-track,
+  .marquee-track-reverse,
+  .marquee-item {
+    gap: 24px;
+  }
+  .marquee-text {
+    font-size: 14px;
+  }
+  .marquee-dot {
+    width: 4px;
+    height: 4px;
   }
 }

@@ -33,8 +33,8 @@ const CurvedLoop = ({
   const textLength = spacing;
   const totalText = textLength
     ? Array(Math.ceil(1800 / textLength) + 2)
-        .fill(text)
-        .join("")
+      .fill(text)
+      .join("")
     : text;
   const ready = spacing > 0;
 
@@ -145,7 +145,7 @@ const CurvedLoop = ({
         <path
           d={pathD}
           fill="none"
-          stroke="#2563eb"
+          stroke="#ea580c"
           strokeWidth="48"
           strokeLinecap="round"
           className="curved-loop-bg"

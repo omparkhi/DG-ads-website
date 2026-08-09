@@ -66,11 +66,30 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord){
 
 void main(){
     vec4 col;mainImage(col,gl_FragCoord.xy);
-    col.rgb=hueShiftRGB(col.rgb,uHueShift);
-    float scanline_val=sin(gl_FragCoord.y*uScanFreq)*0.5+0.5;
-    col.rgb*=1.-(scanline_val*scanline_val)*uScan;
-    col.rgb+=(rand(gl_FragCoord.xy+uTime)-0.5)*uNoise;
-   gl_FragColor=vec4(clamp(col.rgb,0.0,1.0),0.25);
+    
+    // Extract the raw CPPN pattern intensity
+    float pattern = clamp((col.r + col.g + col.b) / 3.0, 0.0, 1.0);
+    
+    // Define clean website theme orange colors
+    vec3 theme_orange = vec3(0.918, 0.345, 0.047);   // #ea580c (Website theme orange)
+    vec3 light_orange = vec3(0.976, 0.451, 0.086);   // #f97316 (Vibrant light orange)
+    
+    // Smooth the pattern slightly to get nice organic wave edges
+    float intensity = smoothstep(0.08, 0.65, pattern);
+    vec3 orange_color = mix(theme_orange, light_orange, intensity);
+    
+    // Apply scanlines or noise if active
+    float scanline_val = sin(gl_FragCoord.y * uScanFreq) * 0.5 + 0.5;
+    orange_color *= 1.0 - (scanline_val * scanline_val) * uScan;
+    orange_color += (rand(gl_FragCoord.xy + uTime) - 0.5) * uNoise;
+    orange_color = clamp(orange_color, 0.0, 1.0);
+    
+    // Blend with a pure white background inside the shader to prevent WebGL/browser alpha blending artifacts (yellow glow/shadows)
+    vec3 background_color = vec3(1.0, 1.0, 1.0);
+    vec3 final_col = mix(background_color, orange_color, intensity);
+    
+    // Output fully opaque color to guarantee clean rendering without browser transparency glitches
+    gl_FragColor = vec4(final_col, 1.0);
 }
 `;
 
@@ -91,6 +110,7 @@ export default function DarkVeil({
     const renderer = new Renderer({
       dpr: Math.min(window.devicePixelRatio, 2),
       canvas,
+      alpha: true,
     });
 
     const gl = renderer.gl;

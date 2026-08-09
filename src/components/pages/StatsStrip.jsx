@@ -54,28 +54,24 @@ function useCountUp(target, decimals = 0, active = false, duration = 1800) {
 
 function StatCard({ stat, index, active, delay }) {
   const count = useCountUp(stat.number, stat.decimals || 0, active, 1600);
-  const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease, delay: delay }}
-      onClick={() => setExpanded((p) => !p)}
       style={{
         flex: 1,
         minWidth: 0,
-        background: "rgba(255,255,255,0.03)",
-        border: `1px solid ${expanded ? "rgba(127,119,221,0.6)" : "rgba(127,119,221,0.18)"}`,
+        background: "#f8fafc",
+        border: "1px solid rgba(234, 88, 12, 0.15)",
         borderRadius: 20,
         padding: "clamp(18px, 3vw, 32px)",
-        cursor: "pointer",
         position: "relative",
         overflow: "hidden",
-        transition: "border-color 0.3s ease",
       }}
     >
-      {/* purple glow on hover */}
+      {/* subtle glow on background */}
       <div
         style={{
           position: "absolute",
@@ -86,7 +82,7 @@ function StatCard({ stat, index, active, delay }) {
           height: 160,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(127,119,221,0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(234, 88, 12, 0.08) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -97,9 +93,10 @@ function StatCard({ stat, index, active, delay }) {
           fontSize: 11,
           letterSpacing: "0.12em",
           textTransform: "uppercase",
-          color: "rgba(255,255,255,0.35)",
+          color: "rgba(15, 23, 42, 0.5)",
           marginBottom: 12,
           fontWeight: 500,
+          textAlign: "left",
         }}
       >
         {stat.label}
@@ -110,12 +107,13 @@ function StatCard({ stat, index, active, delay }) {
         style={{
           fontSize: 56,
           fontWeight: 700,
-          color: "#ffffff",
+          color: "#0f172a",
           lineHeight: 1,
           letterSpacing: "-0.02em",
+          textAlign: "left",
         }}
       >
-        <span style={{ color: "#3b82f6" }}>
+        <span style={{ color: "#ea580c" }}>
           {active
             ? stat.decimals
               ? count.toFixed(stat.decimals)
@@ -125,67 +123,13 @@ function StatCard({ stat, index, active, delay }) {
         <span
           style={{
             fontSize: 32,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(15, 23, 42, 0.4)",
             marginLeft: 2,
           }}
         >
           {stat.suffix}
         </span>
       </div>
-
-      {/* tap hint */}
-      <div
-        style={{
-          marginTop: 16,
-          fontSize: 12,
-          color: expanded ? "#2563eb" : "rgba(255,255,255,0.2)",
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-          transition: "color 0.3s",
-        }}
-      >
-        <span
-          style={{
-            display: "inline-block",
-            width: 14,
-            height: 14,
-            border: "1px solid currentColor",
-            borderRadius: "50%",
-            lineHeight: "13px",
-            textAlign: "center",
-            fontSize: 9,
-          }}
-        >
-          {expanded ? "−" : "+"}
-        </span>
-        {expanded ? "Hide detail" : "View case study"}
-      </div>
-
-      {/* expandable case study */}
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0, marginTop: 0 }}
-            animate={{ opacity: 1, height: "auto", marginTop: 16 }}
-            exit={{ opacity: 0, height: 0, marginTop: 0 }}
-            transition={{ duration: 0.4, ease }}
-            style={{ overflow: "hidden" }}
-          >
-            <div
-              style={{
-                borderTop: "1px solid rgba(127,119,221,0.2)",
-                paddingTop: 14,
-                fontSize: 13,
-                lineHeight: 1.65,
-                color: "rgba(255,255,255,0.55)",
-              }}
-            >
-              {stat.caseStudy}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
@@ -224,19 +168,12 @@ export default function StatsStrip() {
           height: 300,
           borderRadius: "50%",
           background:
-            "radial-gradient(ellipse, rgba(83,74,183,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(234, 88, 12, 0.04) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: 16,
-          position: "relative",
-        }}
-      >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
         {" "}
         {stats.map((stat, i) => (
           <StatCard

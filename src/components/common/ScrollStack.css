@@ -9,16 +9,19 @@
 
 .scroll-stack-inner {
   min-height: 100vh;
-  padding: 0 0 8rem; /* ✅ reduced from 20rem */
+  padding: 0 0 8rem;
+  /* ✅ reduced from 20rem */
 }
 
 .scroll-stack-card {
   background: #13131f;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  /* border: 1px solid rgba(255, 255, 255, 0.07); */
   border-radius: 28px;
   width: 100%;
-  height: "auto"; /* ✅ slightly reduced */
-  margin: 16px 0; /* ✅ tighter margin */
+  height: "auto";
+  /* ✅ slightly reduced */
+  margin: 16px 0;
+  /* ✅ tighter margin */
   padding: 0;
   box-sizing: border-box;
   transform-origin: top center;

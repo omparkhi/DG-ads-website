@@ -11,6 +11,7 @@ const TrueFocus = ({
   glowColor = "rgba(0, 255, 0, 0.6)",
   animationDuration = 0.5,
   pauseBetweenAnimations = 1,
+  color = "#fff",
 }) => {
   const words = sentence.split(separator);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -83,6 +84,7 @@ const TrueFocus = ({
                 : isActive
                   ? `blur(0px)`
                   : `blur(${blurAmount}px)`,
+              color: color,
               "--border-color": borderColor,
               "--glow-color": glowColor,
               transition: `filter ${animationDuration}s ease`,
