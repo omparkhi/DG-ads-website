@@ -82,8 +82,8 @@ export default function ServiceLayout({
         )}
 
         {/* Atmospheric Dark Overlays */}
-        {/* Solid gradient that provides good contrast on mobile while fading nicely on desktop */}
-        <div className="absolute inset-0 h-full bg-gradient-to-r from-black/95 via-black/80 lg:via-black/40 to-black/40 lg:to-transparent z-1" />
+        <div className="absolute inset-0 bg-black/40 z-1 lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent z-1 hidden lg:block" />
 
         {/* Content Container */}
         <motion.div

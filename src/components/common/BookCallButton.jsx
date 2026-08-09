@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function BookCallButton() {
   const avatars = [
     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
@@ -6,8 +8,8 @@ export default function BookCallButton() {
   ];
 
   return (
-    <a
-      href="#contact"
+    <Link
+      to="/contact"
       className="
         group inline-flex items-center
         rounded-full bg-slate-200
@@ -52,6 +54,6 @@ export default function BookCallButton() {
       >
         Book a call with a team
       </span>
-    </a>
+    </Link>
   );
 }
