@@ -1,50 +1,69 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { User } from "lucide-react";
+import { apiGetTestimonials } from "../../services/api";
+
+const fallbackTestimonials = [
+  {
+    quote:
+      "Partnering with Mainframe Solution has been one of the best decisions for our business. Within just two months, our Instagram page crossed 15,000+ followers, and we experienced a significant increase in customer inquiries and sales. Their team understands digital marketing and delivers real results. Highly recommended!",
+    name: "Anil Katole",
+    role: "Owner, Pushpraj Jewellers",
+  },
+  {
+    quote:
+      "We've been working with Mainframe Solution for the past 8 months, and the experience has been excellent. Their consistent marketing efforts have strengthened our online presence and helped us reach more customers. They are professional, responsive, and truly committed to our growth.",
+    name: "Pankaj Chambole",
+    role: "Owner, Chambole Jewellers",
+  },
+  {
+    quote:
+      "Mainframe Solution has helped us attract more families and increase our visibility online. The campaigns were creative, well-managed, and delivered amazing results. We are very happy with their services and would definitely recommend them to other businesses.",
+    name: "Ashish Bagde",
+    role: "Owner, Funfinity World Kids Play Zone",
+  },
+  {
+    quote:
+      "It's been over 6 months since we started working with Mainframe Solution, and we've seen consistent business growth through their digital marketing strategies. Their dedication, creative ideas, and regular support make them a reliable marketing partner.",
+    name: "Sarthak Harad",
+    role: "Owner, Renuka Jewellers",
+  },
+  {
+    quote:
+      "For the last 3 months, Mainframe Solution has delivered excellent results for our business. We've received great customer engagement and a positive response through their social media marketing. Their team is knowledgeable, supportive, and focused on achieving results.",
+    name: "Pallavi Shahu",
+    role: "Owner, Khwaish Jewellers",
+  },
+  {
+    quote:
+      "Within just 2 months of working with Mainframe Solution, we've seen an amazing response from our marketing campaigns. Our brand visibility has improved, customer inquiries have increased, and we're very satisfied with their services. We look forward to continuing this partnership.",
+    name: "Madhuri Jadhav",
+    role: "Owner, Shri Sainath Jewellers",
+  },
+];
 
 export default function Testimonials() {
   const [active, setActive] = useState(0);
+  const [testimonials, setTestimonials] = useState(fallbackTestimonials);
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  const testimonials = [
-    {
-      quote:
-        "Partnering with Mainframe Solution has been one of the best decisions for our business. Within just two months, our Instagram page crossed 15,000+ followers, and we experienced a significant increase in customer inquiries and sales. Their team understands digital marketing and delivers real results. Highly recommended!",
-      name: "Anil Katole",
-      role: "Owner, Pushpraj Jewellers",
-    },
-    {
-      quote:
-        "We've been working with Mainframe Solution for the past 8 months, and the experience has been excellent. Their consistent marketing efforts have strengthened our online presence and helped us reach more customers. They are professional, responsive, and truly committed to our growth.",
-      name: "Pankaj Chambole",
-      role: "Owner, Chambole Jewellers",
-    },
-    {
-      quote:
-        "Mainframe Solution has helped us attract more families and increase our visibility online. The campaigns were creative, well-managed, and delivered amazing results. We are very happy with their services and would definitely recommend them to other businesses.",
-      name: "Ashish Bagde",
-      role: "Owner, Funfinity World Kids Play Zone",
-    },
-    {
-      quote:
-        "It's been over 6 months since we started working with Mainframe Solution, and we've seen consistent business growth through their digital marketing strategies. Their dedication, creative ideas, and regular support make them a reliable marketing partner.",
-      name: "Sarthak Harad",
-      role: "Owner, Renuka Jewellers",
-    },
-    {
-      quote:
-        "For the last 3 months, Mainframe Solution has delivered excellent results for our business. We've received great customer engagement and a positive response through their social media marketing. Their team is knowledgeable, supportive, and focused on achieving results.",
-      name: "Pallavi Shahu",
-      role: "Owner, Khwaish Jewellers",
-    },
-    {
-      quote:
-        "Within just 2 months of working with Mainframe Solution, we've seen an amazing response from our marketing campaigns. Our brand visibility has improved, customer inquiries have increased, and we're very satisfied with their services. We look forward to continuing this partnership.",
-      name: "Madhuri Jadhav",
-      role: "Owner, Shri Sainath Jewellers",
-    },
-  ];
+  useEffect(() => {
+    async function loadCMSData() {
+      const res = await apiGetTestimonials();
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setTestimonials(
+          res.data.map((t) => ({
+            quote: t.quote,
+            name: t.name,
+            role: t.role,
+            avatarUrl: t.avatarUrl,
+          }))
+        );
+      }
+    }
+    loadCMSData();
+  }, []);
 
   const next = () => setActive((prev) => (prev + 1) % testimonials.length);
   const prev = () => setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -54,7 +73,7 @@ export default function Testimonials() {
       next();
     }, 5000);
     return () => clearInterval(timer);
-  }, [active]);
+  }, [active, testimonials.length]);
 
   return (
     <section
@@ -66,7 +85,6 @@ export default function Testimonials() {
       <div className="absolute rounded-full opacity-8 bg-orange-600 w-[400px] h-[400px] -right-[100px] -bottom-[100px] pointer-events-none" />
 
       <div className="container-main relative z-10">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -100,7 +118,11 @@ export default function Testimonials() {
 
                   <div className="flex items-center justify-center gap-3 sm:gap-4">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0 border border-slate-200 bg-slate-100 flex items-center justify-center shadow-sm">
-                      <User className="w-5 h-5 sm:w-7 sm:h-7 text-slate-400" />
+                      {t.avatarUrl ? (
+                        <img src={t.avatarUrl} alt={t.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <User className="w-5 h-5 sm:w-7 sm:h-7 text-slate-400" />
+                      )}
                     </div>
                     <div className="text-left">
                       <h6 className="text-[16px] sm:text-[18px] font-bold text-slate-900 leading-tight">
@@ -132,8 +154,9 @@ export default function Testimonials() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${i === active ? "bg-orange-600 scale-[1.3]" : "bg-slate-200"
-                    }`}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === active ? "bg-orange-600 scale-[1.3]" : "bg-slate-200"
+                  }`}
                   onClick={() => setActive(i)}
                   aria-label={`Slide ${i + 1}`}
                 />
@@ -150,7 +173,6 @@ export default function Testimonials() {
               </svg>
             </button>
           </div>
-
         </div>
       </div>
     </section>

@@ -34,6 +34,7 @@ export default function Home() {
     <main>
       <Hero />
       {/* <ClientLogos /> */}
+      {/* ClientPage */}
       <AgencyIntro />
       {/* <StatsStrip /> */}
       <WhoWeAre />

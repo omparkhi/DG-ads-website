@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send, ArrowRight } from "lucide-react";
+import { Mail, Phone, Send } from "lucide-react";
 import Avatar from "../../assets/dg-ads-avatar.png";
+import { apiSubmitInquiry } from "../../services/api";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
     subject: "",
     message: "",
@@ -13,6 +15,7 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Scroll to top on mount
   useEffect(() => {
@@ -24,18 +27,32 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMessage("");
+
+    try {
+      const res = await apiSubmitInquiry({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        service: formData.subject || "General Inquiry",
+        message: formData.message,
+      });
+
+      if (res.success) {
+        setIsSubmitted(true);
+        setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+        setTimeout(() => setIsSubmitted(false), 6000);
+      } else {
+        setErrorMessage(res.message || "Failed to submit message. Please try again.");
+      }
+    } catch (err) {
+      setErrorMessage("Network error. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -60,14 +77,12 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] pt-32 pb-24 overflow-hidden relative">
-      
+    <div className="min-h-screen bg-[#FDFCFB] pt-32 pb-24 overflow-hidden relative select-none">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-900/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.div
@@ -92,9 +107,8 @@ export default function ContactPage() {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          
           {/* Left Column: Contact Info & Avatar */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -102,9 +116,9 @@ export default function ContactPage() {
           >
             {/* Avatar Card */}
             <div className="flex flex-col items-center justify-center text-center relative group p-4">
-              <img 
-                src={Avatar} 
-                alt="DG Ads Avatar" 
+              <img
+                src={Avatar}
+                alt="DG Ads Avatar"
                 className="w-40 h-40 object-contain mb-6 relative z-10 group-hover:scale-105 transition-transform duration-500"
               />
               <h3 className="text-2xl font-bold text-slate-900 font-['Mona_Sans'] relative z-10">We're Here to Help!</h3>
@@ -131,7 +145,7 @@ export default function ContactPage() {
           </motion.div>
 
           {/* Right Column: Contact Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -139,13 +153,13 @@ export default function ContactPage() {
           >
             <div className="bg-white rounded-[2rem] p-8 md:p-12 border border-slate-200 shadow-2xl shadow-slate-200/50">
               <h3 className="text-3xl font-bold text-slate-900 mb-8 font-['Mona_Sans']">Send a Message</h3>
-              
+
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Name Input */}
                   <div className="flex flex-col gap-2">
                     <label htmlFor="name" className="text-sm font-bold text-slate-700 ml-1">
-                      Full Name
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -159,6 +173,25 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {/* Phone Input */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="phone" className="text-sm font-bold text-slate-700 ml-1">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      placeholder="+91 9876543210"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-orange-500 focus:bg-white text-slate-900 rounded-xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-400 font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Email Input */}
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email" className="text-sm font-bold text-slate-700 ml-1">
@@ -170,28 +203,26 @@ export default function ContactPage() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
                       placeholder="john@company.com"
                       className="w-full bg-slate-50 border border-slate-200 focus:border-orange-500 focus:bg-white text-slate-900 rounded-xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-400 font-medium"
                     />
                   </div>
-                </div>
 
-                {/* Subject Input */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="subject" className="text-sm font-bold text-slate-700 ml-1">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    placeholder="How can we help you?"
-                    className="w-full bg-slate-50 border border-slate-200 focus:border-orange-500 focus:bg-white text-slate-900 rounded-xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-400 font-medium"
-                  />
+                  {/* Subject Input */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="subject" className="text-sm font-bold text-slate-700 ml-1">
+                      Service Interested In
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      placeholder="e.g. Meta Ads / Digital Marketing"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-orange-500 focus:bg-white text-slate-900 rounded-xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-400 font-medium"
+                    />
+                  </div>
                 </div>
 
                 {/* Message Input */}
@@ -204,9 +235,8 @@ export default function ContactPage() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    required
-                    rows={5}
-                    placeholder="Tell us about your project..."
+                    rows={4}
+                    placeholder="Tell us about your business goals..."
                     className="w-full bg-slate-50 border border-slate-200 focus:border-orange-500 focus:bg-white text-slate-900 rounded-xl px-5 py-4 text-base focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-400 font-medium resize-none"
                   />
                 </div>
@@ -215,9 +245,8 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`mt-4 w-full md:w-auto md:self-end flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold text-base px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-orange-600/20 hover:shadow-orange-600/40 hover:-translate-y-1 ${
-                    isSubmitting ? "opacity-70 cursor-wait" : ""
-                  }`}
+                  className={`mt-4 w-full md:w-auto md:self-end flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold text-base px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-orange-600/20 hover:shadow-orange-600/40 hover:-translate-y-1 cursor-pointer ${isSubmitting ? "opacity-70 cursor-wait" : ""
+                    }`}
                 >
                   {isSubmitting ? (
                     "Sending..."
@@ -229,9 +258,15 @@ export default function ContactPage() {
                   )}
                 </button>
 
+                {errorMessage && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm font-medium">
+                    {errorMessage}
+                  </div>
+                )}
+
                 {/* Success Message */}
                 {isSubmitted && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-2 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 text-green-700 font-medium"
@@ -240,11 +275,9 @@ export default function ContactPage() {
                     Thank you! Your message has been sent successfully. We will be in touch soon.
                   </motion.div>
                 )}
-
               </form>
             </div>
           </motion.div>
-
         </div>
       </div>
     </div>

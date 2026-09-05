@@ -1,24 +1,46 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { apiGetCaseStudies } from "../../services/api";
 
 const MotionLink = motion(Link);
+
+const fallbackCaseStudies = [
+  {
+    id: "1",
+    title: "Digital Growth for a Nagpur-Based Business",
+    category: "Digital Marketing",
+    metric: "3X Leads",
+    image: "https://framerusercontent.com/images/kza2HfI8ZzmM1rCS88ItPqNbf0k.png",
+    link: "/portfolio/1",
+  },
+];
 
 export default function Portfolio() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  const caseStudies = [
-    {
-      id: "1",
-      title: "Digital Growth for a Nagpur-Based Business",
-      category: "Digital Marketing",
-      metric: "3X Leads",
-      image: "https://framerusercontent.com/images/kza2HfI8ZzmM1rCS88ItPqNbf0k.png",
-      link: "/portfolio/1",
+  const [caseStudies, setCaseStudies] = useState(fallbackCaseStudies);
+
+  useEffect(() => {
+    async function loadCMSData() {
+      const res = await apiGetCaseStudies();
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setCaseStudies(
+          res.data.map((item) => ({
+            id: item._id,
+            title: item.title,
+            category: item.category,
+            metric: item.metric,
+            image: item.image,
+            link: item.link || `/portfolio/${item._id}`,
+          }))
+        );
+      }
     }
-  ];
+    loadCMSData();
+  }, []);
 
   return (
     <section
@@ -27,7 +49,6 @@ export default function Portfolio() {
       className="w-full py-20 md:py-32 bg-white select-none relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -43,7 +64,6 @@ export default function Portfolio() {
               Discover Our Latest<br />Client Successes
             </h2>
           </div>
-
         </motion.div>
 
         {/* Grid List */}
@@ -51,7 +71,7 @@ export default function Portfolio() {
           {caseStudies.map((study, index) => (
             <MotionLink
               to={study.link}
-              key={index}
+              key={study.id || index}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}

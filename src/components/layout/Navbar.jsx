@@ -116,7 +116,7 @@ export default function Navbar() {
         className="mx-auto flex items-center justify-between"
       >
         {/* Logo + Brand */}
-        <div className="flex items-center" >
+        <div className={`flex items-center ${scrolled ? "bg-transparent rounded-none" : "bg-white rounded-md"}`} >
           <motion.img
             src={Logo}
             alt="logo"

@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { apiGetClientLogos } from "../../services/api";
+
+const fallbackLogos = [
+  "https://framerusercontent.com/images/MOBK0mKQQuMmtaAUUIMPsrZBlKs.svg",
+  "https://framerusercontent.com/images/HsSlQ8Vh8wq9DQ25Ecd0STahdc.svg",
+  "https://framerusercontent.com/images/gi8zgIuOzKVoK4gq2zvrGVLB28Y.svg",
+  "https://framerusercontent.com/images/qErEULyo05GH1kt2HaYm5EsW4Ts.png",
+  "https://framerusercontent.com/images/De8QHCYof3pppRSDd6CxD9giNqQ.svg",
+  "https://framerusercontent.com/images/oFsIVRJX8V4LvjfaZlfHpDOS8g.svg",
+  "https://framerusercontent.com/images/HT1otXjN3yQJe0JecKE8QAmmY2U.svg",
+  "https://framerusercontent.com/images/EN7bkEX3Rm9MYMg46gmxqUhPs.svg",
+  "https://framerusercontent.com/images/oPgn9OvdAyjp16g9upgCbG3wNHM.svg",
+];
 
 export default function ClientLogos() {
-  const clientLogos = [
-    "https://framerusercontent.com/images/MOBK0mKQQuMmtaAUUIMPsrZBlKs.svg",
-    "https://framerusercontent.com/images/HsSlQ8Vh8wq9DQ25Ecd0STahdc.svg",
-    "https://framerusercontent.com/images/gi8zgIuOzKVoK4gq2zvrGVLB28Y.svg",
-    "https://framerusercontent.com/images/qErEULyo05GH1kt2HaYm5EsW4Ts.png",
-    "https://framerusercontent.com/images/De8QHCYof3pppRSDd6CxD9giNqQ.svg",
-    "https://framerusercontent.com/images/oFsIVRJX8V4LvjfaZlfHpDOS8g.svg",
-    "https://framerusercontent.com/images/HT1otXjN3yQJe0JecKE8QAmmY2U.svg",
-    "https://framerusercontent.com/images/EN7bkEX3Rm9MYMg46gmxqUhPs.svg",
-    "https://framerusercontent.com/images/oPgn9OvdAyjp16g9upgCbG3wNHM.svg",
-  ];
+  const [clientLogos, setClientLogos] = useState(fallbackLogos);
+
+  useEffect(() => {
+    async function loadCMSData() {
+      const res = await apiGetClientLogos();
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setClientLogos(res.data.map((item) => item.logoUrl));
+      }
+    }
+    loadCMSData();
+  }, []);
 
   // Duplicate the array to ensure smooth infinite loop scroll
   const duplicatedLogos = [...clientLogos, ...clientLogos, ...clientLogos];

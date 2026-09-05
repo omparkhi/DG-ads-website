@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { apiGetStats } from "../../services/api";
 
 const ease = [0.16, 1, 0.3, 1];
 
-const stats = [
+const fallbackStats = [
   {
     number: 15,
     suffix: "+",
@@ -71,7 +72,6 @@ function StatCard({ stat, index, active, delay }) {
         overflow: "hidden",
       }}
     >
-      {/* subtle glow on background */}
       <div
         style={{
           position: "absolute",
@@ -87,7 +87,6 @@ function StatCard({ stat, index, active, delay }) {
         }}
       />
 
-      {/* top label */}
       <div
         style={{
           fontSize: 11,
@@ -102,7 +101,6 @@ function StatCard({ stat, index, active, delay }) {
         {stat.label}
       </div>
 
-      {/* number */}
       <div
         style={{
           fontSize: 56,
@@ -136,14 +134,25 @@ function StatCard({ stat, index, active, delay }) {
 
 export default function StatsStrip() {
   const [visible, setVisible] = useState(false);
+  const [stats, setStats] = useState(fallbackStats);
   const ref = useRef(null);
+
+  useEffect(() => {
+    async function loadCMSData() {
+      const res = await apiGetStats();
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setStats(res.data);
+      }
+    }
+    loadCMSData();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setVisible(true);
       },
-      { threshold: 0.3 },
+      { threshold: 0.3 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -157,7 +166,6 @@ export default function StatsStrip() {
         position: "relative",
       }}
     >
-      {/* subtle bg glow */}
       <div
         style={{
           position: "absolute",
@@ -174,10 +182,9 @@ export default function StatsStrip() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
-        {" "}
         {stats.map((stat, i) => (
           <StatCard
-            key={stat.label}
+            key={stat.label || i}
             stat={stat}
             index={i}
             active={visible}
@@ -185,39 +192,6 @@ export default function StatsStrip() {
           />
         ))}
       </div>
-
-      {/* replay button */}
-      {/* <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: visible ? 1 : 0 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        onClick={() => {
-          setVisible(false);
-          setTimeout(() => setVisible(true), 50);
-        }}
-        style={{
-          marginTop: 28,
-          background: "transparent",
-          border: "1px solid rgba(127,119,221,0.3)",
-          borderRadius: 10,
-          color: "rgba(255,255,255,0.4)",
-          fontSize: 12,
-          padding: "8px 18px",
-          cursor: "pointer",
-          letterSpacing: "0.04em",
-          transition: "all 0.2s",
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.borderColor = "rgba(127,119,221,0.7)";
-          e.target.style.color = "rgba(255,255,255,0.8)";
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.borderColor = "rgba(127,119,221,0.3)";
-          e.target.style.color = "rgba(255,255,255,0.4)";
-        }}
-      >
-        Replay animation ↗
-      </motion.button> */}
     </section>
   );
 }
