@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Environment variables
+.env
+.env*.local
+.env.local
+admin/.env
+admin/.env*.local
+admin/.env.local
